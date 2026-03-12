@@ -69,13 +69,16 @@
           <div class="card shadow p-4">
             <h3 class="mb-3 text-center">Contact Us</h3>
 
-            <form>
+           <form id="contactForm" onsubmit="return sendInquiry(event)">
               <div class="mb-3">
                 <label class="form-label">Full Name</label>
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Enter your name"
+                  autofocus="autofocus"
+                  required="required"
+                  id="name"
                 />
               </div>
 
@@ -85,6 +88,8 @@
                   type="email"
                   class="form-control"
                   placeholder="Enter your email"
+                  id="email"
+                  required="required"
                 />
               </div>
 
@@ -94,6 +99,7 @@
                   class="form-control"
                   rows="4"
                   placeholder="Write your message"
+                  id="message"
                 ></textarea>
               </div>
 
@@ -119,5 +125,86 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+function sendInquiry(event)
+{
+
+event.preventDefault(); // page reload stop
+
+let name=document.getElementById("name").value.trim();
+let email=document.getElementById("email").value.trim();
+let message=document.getElementById("message").value.trim();
+
+
+// validation
+
+if(name=="")
+{
+alert("Name is required");
+return false;
+}
+
+if(name.length<3)
+{
+alert("Name must be minimum 3 characters");
+return false;
+}
+
+let emailPattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if(!emailPattern.test(email))
+{
+alert("Enter valid email");
+return false;
+}
+
+if(message=="")
+{
+alert("Message cannot be empty");
+return false;
+}
+
+
+// object
+
+let inquiry={
+name:name,
+email:email,
+message:message
+};
+
+
+// fetch API
+
+fetch("saveInquiry",
+{
+method:"POST",
+
+headers:
+{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify(inquiry)
+
+})
+
+.then(response=>response.text())
+
+.then(data=>{
+alert(data);
+document.getElementById("contactForm").reset();
+})
+
+.catch(error=>{
+alert("Error : "+error);
+});
+
+return false;
+
+}
+
+</script>
   </body>
 </html>

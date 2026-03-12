@@ -78,13 +78,16 @@
           <div class="card shadow p-4">
             <h3 class="text-center mb-4">Login Here</h3>
 
-            <form>
+           <form id="loginForm" onsubmit="return loginUser(event)">
               <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Enter username"
+                  autofocus="autofocus"
+                  id="username"
+                  required="required"
                 />
               </div>
 
@@ -94,6 +97,8 @@
                   type="password"
                   class="form-control"
                   placeholder="Enter password"
+                  required="required"
+                  id="password"
                 />
               </div>
 
@@ -123,5 +128,94 @@
  </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+function loginUser(event)
+{
+
+event.preventDefault(); // form reload stop
+
+let username=document.getElementById("username").value.trim();
+let password=document.getElementById("password").value.trim();
+
+
+// validation
+
+if(username=="")
+{
+alert("Username required");
+return false;
+}
+
+if(username.length<3)
+{
+alert("Username must be minimum 3 characters");
+return false;
+}
+
+if(password=="")
+{
+alert("Password required");
+return false;
+}
+
+if(password.length<6)
+{
+alert("Password must be minimum 6 characters");
+return false;
+}
+
+
+// object create
+
+let user={
+username:username,
+password:password
+};
+
+
+// fetch API
+
+fetch("loginUser",
+{
+method:"POST",
+
+headers:
+{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify(user)
+
+})
+
+.then(response=>response.text())
+
+.then(data=>{
+
+if(data=="success")
+{
+alert("Login Successful");
+
+// redirect dashboard
+window.location.href="userDashboard";
+
+}
+else
+{
+alert("Invalid Username or Password");
+}
+
+})
+
+.catch(error=>{
+alert("Error : "+error);
+});
+
+return false;
+
+}
+
+</script>
   </body>
 </html>
