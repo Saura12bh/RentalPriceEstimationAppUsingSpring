@@ -17,7 +17,7 @@ public class DbConfig {
 		ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		ds.setUsername("root");
 		ds.setPassword("Saurabh2003");
-		ds.setUrl("jdbc:mysql://localhost:3306/springsecuritydb");
+		ds.setUrl("jdbc:mysql://localhost:3306/rentalpriceapp");
 		return ds;		
 	}
 	@Bean("jdbcTemplate")
