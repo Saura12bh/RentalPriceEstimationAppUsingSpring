@@ -1,6 +1,9 @@
 package org.springMvc.service;
 
+import java.util.List;
+
 import org.springMvc.model.User;
+import org.springMvc.repo.UserRepo;
 import org.springMvc.repo.UserRepoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,5 +60,36 @@ public class UserServiceImpl implements UserService{
 		else {
 			return "password is incorrect";
 		}
+	}
+
+	@Override
+	public List<User> display() {
+		List<User> list = userRepo.display();
+
+	    if(list.isEmpty()) {
+//	    	logger.error("No employee data in database");
+//	        throw new EmpNotFound("No employees found in database");
+	    	
+	    }
+		return userRepo.display();
+	}
+
+	@Override
+	public void delete(int id) {
+		List<User> list=userRepo.search(id);
+		if(list.isEmpty())
+		{
+//			logger.error("emp id not found");
+//			throw new EmpNotFound("Emp not found with eid ="+eid);
+		}
+		 userRepo.delete(id);
+	}
+	public List<User> search(int id) {   
+		List<User> list=userRepo.search(id);
+		if(list.isEmpty())
+		{
+//			throw new EmpNotFound("Emp not found with eid ="+eid);
+		}
+		return userRepo.search(id);
 	}
 }

@@ -217,7 +217,7 @@ response.sendRedirect("lg");
 							<thead>
 								<tr>
 									<th>User ID</th>
-									<th>Name</th>
+									<th>User Name</th>
 									<th>Email</th>
 									<th>Contact</th>
 									<th>Role</th>
@@ -372,34 +372,56 @@ function showSection(sectionId) {
 //display user
 function display()
 {
-	fetch("display").	
+	fetch("/RentalPriceEstimationApp/admin/display").	
 	then((res)=>{
-		if(!res.ok)
+		/* if(!res.ok)
 			{
 			return res.json().then((err)=>{
 				throw err;
 			});
-			}
+			} */
 		return res.json();
 	}).
 	then((data)=>{   //ya data madhe back end vrun yenari list ahe
 		let tb=document.getElementById("tb");
 		tb.innerHTML="";
-		data.forEach((ele)=>{  //yethe pratek emp cha data yeto 
-			let tr=document.createElement("tr");
-			let tdid=document.createElement("td");
-			tdid.innerText=ele.eid;
-			let tdn=document.createElement("td");
-			tdn.innerText=ele.ename;
-			let tds=document.createElement("td");
-			tds.innerText=ele.sal;
-			
+		data.forEach(ele => {
+
+			let tr = document.createElement("tr");
+
+			let tdid = document.createElement("td");
+			tdid.innerText = ele.id;
+
+			let tdname = document.createElement("td");
+			tdname.innerText = ele.username;
+
+			let tdemail = document.createElement("td");
+			tdemail.innerText = ele.email;
+
+			let tdcontact = document.createElement("td");
+			tdcontact.innerText = ele.contact;
+
+			let tdrole = document.createElement("td");
+			tdrole.innerText = ele.role;
+
+			let tdaction = document.createElement("td");
+
+			let btn = document.createElement("button");
+			btn.innerText = "Delete";
+			btn.className="btn btn-danger btn-sm";
+
+			tdaction.appendChild(btn);
+
 			tr.appendChild(tdid);
-			tr.appendChild(tdn);
-			tr.appendChild(tds);
-			
-			tb.appendChild(tr);    
-		});
+			tr.appendChild(tdname);
+			tr.appendChild(tdemail);
+			tr.appendChild(tdcontact);
+			tr.appendChild(tdrole);
+			tr.appendChild(tdaction);
+
+			tb.appendChild(tr);
+
+			});
 	}).
 	catch((err)=>{
 		alert(err.message);

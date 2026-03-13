@@ -1,6 +1,10 @@
 package org.springMvc.controller;
 
 
+import java.util.List;
+
+import org.springMvc.model.User;
+import org.springMvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	@Autowired
+	UserService userService;
 	
 	@GetMapping("/adminDashboard")
 	public String openDashboard(HttpSession session,Model model) {
@@ -35,5 +41,14 @@ public class AdminController {
 	{
 	    session.invalidate(); // session destroy
 	    return "redirect:/lg"; // login page
+	}
+	
+	//display user
+	@GetMapping("/display")
+	@ResponseBody
+	public List<User> display()   
+	{
+		List<User> list=userService.display();
+		return list;
 	}
 }
