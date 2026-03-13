@@ -47,16 +47,12 @@ public class UserServiceImpl implements UserService{
 		
 		if(encoder.matches(user.getPassword(), userDb.getPassword()))
 		{
-//			session.setAttribute("un",userDb.getUsername());
-//			return "Login Success";
-			
-			if(user.getRole().equals("USER"))
-			{
-				return "User Login Success";
-			}
-			else {
-				return "Admin Login Success";
-			}
+			session.setAttribute("un",userDb.getUsername());
+			if ("ADMIN".equals(userDb.getRole())) {
+                return "Admin Login Success";
+            } else {
+                return "User Login Success";
+            }
 		}
 		else {
 			return "password is incorrect";

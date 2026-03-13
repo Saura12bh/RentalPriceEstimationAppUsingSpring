@@ -23,14 +23,14 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-	
-    @RequestMapping("/userDashboard")
+
+	@RequestMapping("/userDashboard")
     public String dashboard(HttpSession session,Model model)
     {
-    	String userName=(String) session.getAttribute("userName");
+    	String userName=(String) session.getAttribute("un");
     	if(userName==null)
     	{
-    		return "redirect:/user/";
+    		return "redirect:/";
     	}
     	model.addAttribute(userName, userName);
         return "userDashboard";

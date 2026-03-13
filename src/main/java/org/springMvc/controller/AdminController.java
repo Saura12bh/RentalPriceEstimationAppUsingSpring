@@ -19,12 +19,21 @@ public class AdminController {
 	@GetMapping("/adminDashboard")
 	public String openDashboard(HttpSession session,Model model) {
 		
-		String adminName=(String)session.getAttribute("name");
+		String adminName=(String)session.getAttribute("un");
 		if(adminName==null)
 		{
-			return "redirect:/admin/";
+			return "redirect:/";
 		}
 		model.addAttribute("adminName", adminName);
-	    return "adminDashborad";
+	    return "adminDashboard";
+	}
+	
+	
+	//logout 
+	@GetMapping("/logout")
+	public String logout(HttpSession session)
+	{
+	    session.invalidate(); // session destroy
+	    return "redirect:/lg"; // login page
 	}
 }
