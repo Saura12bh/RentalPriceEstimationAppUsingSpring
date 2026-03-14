@@ -1,12 +1,11 @@
 
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%
-String user=(String)session.getAttribute("un");
-if(user==null)
-{
-response.sendRedirect("lg");
+String user = (String) session.getAttribute("un");
+if (user == null) {
+	response.sendRedirect("lg");
 }
 %>
 
@@ -39,10 +38,23 @@ response.sendRedirect("lg");
 			<div class="col-md-3 col-lg-2 bg-secondary min-vh-100 p-3">
 				<h5 class="text-center mb-4">Menu</h5>
 				<marquee behavior="" direction="" scrollamount="4">
-					Welcome  ${un} </marquee>
+					Welcome ${un} </marquee>
 				<div class="nav flex-column">
+					<!-- add property -->
 					<button class="btn btn-outline-light mb-2"
 						onclick="showSection('addForm')">Add Property</button>
+
+					<button class="btn btn-outline-light mb-2"
+						onclick="showSection('addState')">Add State</button>
+
+					<button class="btn btn-outline-light mb-2"
+						onclick="showSection('addcity')">Add City</button>
+
+
+					<button class="btn btn-outline-light mb-2"
+						onclick="showSection('addloc')">Add location</button>
+
+
 					<button class="btn btn-outline-light mb-2"
 						onclick="showSection('searchForm');">Display Property</button>
 					<button class="btn btn-outline-light"
@@ -130,6 +142,112 @@ response.sendRedirect("lg");
 					</div>
 				</div>
 
+				<!-- add state  -->
+				<div id="addState" class="section mt-5 d-none">
+
+					<div class="overlay">
+						<!-- Login Section -->
+						<div
+							class="container flex-grow-1 d-flex justify-content-center align-items-center">
+							<div class="col-md-4">
+								<div class="card shadow p-4">
+									<h3 class="text-center mb-4">Add State</h3>
+
+									<form id="stateForm">
+										<div class="mb-3">
+											<label class="form-label">State Code</label> <input
+												type="number" class="form-control" id="statecode"
+												placeholder="Enter state code" required="required" />
+										</div>
+
+										<div class="mb-3">
+											<label class="form-label">State Name</label> <input
+												type="text" class="form-control" required="required"
+												id="statename" placeholder="Enter state name" />
+										</div>
+
+										<div class="d-flex">
+											<button type="submit" class="btn btn-primary me-3">Add</button>
+
+											<button type="reset" class="btn btn-secondary">Cancel</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+				<!-- add city  -->
+				<div id="addcity" class="section d-none mt-5">
+
+					<div class="overlay">
+						<!-- Login Section -->
+						<div
+							class="container flex-grow-1 d-flex justify-content-center align-items-center">
+							<div class="card p-4 mb-4">
+
+								<h4>Add City</h4>
+
+								<form id="cityForm">
+									<h6>select</h6>
+									<select id="stateSelect" onclick="loadStates()">
+	
+										
+									</select> <input type="text" id="cityname" class="form-control mb-3"
+										placeholder="City Name">
+
+									<button class="btn btn-success" id="cityBtn" >Add City</button>
+
+								</form>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- add location  -->
+				<div id="addloc" class="section mt-5 d-none">
+					<div class="overlay">
+						<!-- Login Section -->
+						<div
+							class="container flex-grow-1 d-flex justify-content-center align-items-center">
+							<div class="col-md-4">
+								<div class="card shadow p-4">
+									<h3 class="text-center mb-4">Add Location</h3>
+
+									<form>
+										<div class="mt-3">
+											<label class="form-label">Select City</label> <select
+												class="form-select text-dark border-dark" name="yesNoOption">
+												<option value="">-- Select --</option>
+												<option value="Yes">Sangamner</option>
+												<option value="No">pune</option>
+											</select>
+										</div>
+
+										<div class="mb-3 mt-3">
+											<label class="form-label">Location Name</label> <input
+												type="text" class="form-control"
+												placeholder="Enter location name" />
+										</div>
+
+										<div class="d-flex">
+											<button type="submit" class="btn btn-primary me-5">Add</button>
+											<button type="reset" class="btn btn-secondary">Cancel</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
 				<!-- Search -->
 				<div id="searchForm" class="section d-none">
 
@@ -182,8 +300,8 @@ response.sendRedirect("lg");
 									<td>1.5 km</td>
 									<td>₹18,000</td>
 									<td><a href="updateProperty.jsp?id=1"
-										class="btn btn-warning btn-sm">Update</a> <a
-										href="#" class="btn btn-danger btn-sm">Delete</a></td>
+										class="btn btn-warning btn-sm">Update</a> <a href="#"
+										class="btn btn-danger btn-sm">Delete</a></td>
 								</tr>
 
 								<tr>
@@ -198,8 +316,8 @@ response.sendRedirect("lg");
 									<td>0.8 km</td>
 									<td>₹25,000</td>
 									<td><a href="updateProperty.jsp?id=2"
-										class="btn btn-warning btn-sm">Update</a> <a
-										href="#" class="btn btn-danger btn-sm">Delete</a></td>
+										class="btn btn-warning btn-sm">Update</a> <a href="#"
+										class="btn btn-danger btn-sm">Delete</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -234,7 +352,6 @@ response.sendRedirect("lg");
 		</div>
 	</div>
 
-	<script src="./js/Main.js"></script>
 	<script>
 
 document.getElementById("houseForm").addEventListener("submit", saveHouse);
@@ -409,7 +526,10 @@ function display()
 			let btn = document.createElement("button");
 			btn.innerText = "Delete";
 			btn.className="btn btn-danger btn-sm";
-
+			btn.onclick=function(){
+				deleteUser(ele.id);  //jya record samorcha 
+				};
+			
 			tdaction.appendChild(btn);
 
 			tr.appendChild(tdid);
@@ -428,6 +548,255 @@ function display()
 	});
 }
 
+//delete user
+function deleteUser(id)
+{
+
+if(confirm("Are you sure you want to delete?"))
+{
+
+fetch("/RentalPriceEstimationApp/admin/delete/"+id)
+.then(res=>res.text())
+
+.then(msg=>{
+alert(msg);
+display(); // reload table
+})
+
+.catch(err=>{
+alert("Error : "+err);
+});
+}
+}
+</script>
+	<script type="text/javascript">
+	window.onload=function(){
+		loadStates();
+		}
+
+	
+document.getElementById("stateForm").addEventListener("submit",function(event){
+
+	event.preventDefault();
+
+	let statecode=document.getElementById("statecode").value.trim();
+	let statename=document.getElementById("statename").value.trim();
+
+	if(statecode=="")
+	{
+	alert("statecode required");
+	return;
+	}
+
+	if(statename=="")
+	{
+	alert("statename required");
+	return;
+	}
+
+	let state={
+	statecode:statecode,
+	statename:statename
+	};
+
+	fetch("/RentalPriceEstimationApp/admin/savestate",{
+
+	method:"POST",
+
+	headers:{
+	"Content-Type":"application/json"
+	},
+
+	body:JSON.stringify(state)
+
+	})
+
+	.then(res=>res.text())
+
+	.then(msg=>{
+	alert(msg);
+	document.getElementById("stateForm").reset();
+	})
+
+	.catch(err=>{
+	alert("Error : "+err);
+	});
+
+	});
+
+//load state and city
+
+
+
+function loadStates(){
+
+fetch("/RentalPriceEstimationApp/admin/states")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let stateSelect=document.getElementById("stateSelect");
+let stateDropdown=document.getElementById("stateDropdown");
+
+data.forEach(s=>{
+
+let op=document.createElement("option");
+
+op.value=s.statecode;
+op.text=s.statename;
+
+stateSelect.appendChild(op);
+stateDropdown.appendChild(op.cloneNode(true));
+
+});
+
+});
+
+}
+
+// Add City
+
+document.getElementById("cityForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let statecode=document.getElementById("stateSelect").value;
+let cityname=document.getElementById("cityname").value;
+
+fetch("/RentalPriceEstimationApp/admin/savecity",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+name:cityname,
+statecode:statecode
+
+})
+
+})
+
+.then(res=>res.text())
+
+.then(msg=>{
+alert(msg);
+});
+
+});
+
+
+
+
+// Load City by State
+
+document.getElementById("stateDropdown").addEventListener("change",function(){
+
+let stateid=this.value;
+
+fetch("/RentalPriceEstimationApp/admin/city/"+stateid)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let city=document.getElementById("cityDropdown");
+
+city.innerHTML="<option>Select City</option>";
+
+data.forEach(c=>{
+
+let op=document.createElement("option");
+
+op.value=c.id;
+op.text=c.name;
+
+city.appendChild(op);
+
+});
+
+});
+
+});
+
+
+
+
+// Add Location
+
+document.getElementById("locationForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let cityid=document.getElementById("cityDropdown").value;
+let locationname=document.getElementById("locationname").value;
+
+fetch("/RentalPriceEstimationApp/admin/savelocation",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+name:locationname,
+cityid:cityid
+
+})
+
+})
+
+.then(res=>res.text())
+
+.then(msg=>{
+alert(msg);
+});
+
+});
+
+</script>
+<script type="text/javascript">
+<script type="text/javascript">
+function loadStates(){
+
+fetch("/RentalPriceEstimationApp/admin/states")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let stateSelect=document.getElementById("stateSelect");
+
+stateSelect.innerHTML="<option>Select State</option>";
+
+data.forEach(s=>{
+
+let op=document.createElement("option");
+
+op.value=s.statecode;
+op.text=s.statename;
+
+stateSelect.appendChild(op);
+
+});
+
+})
+
+.catch(err=>{
+
+console.log(err);
+alert("Error loading states");
+
+});
+
+}
+	<script>
 </script>
 </body>
 </html>

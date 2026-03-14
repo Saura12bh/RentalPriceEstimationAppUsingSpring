@@ -50,7 +50,7 @@ public class UserRepoImpl implements UserRepo{
 
 	@Override
 	public List<User> display() {
-		List<User> list=jdbc.query("select * from user",new RowMapper<User>() {
+		List<User> list=jdbc.query("select * from user where role='USER'",new RowMapper<User>() {
 
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
