@@ -189,17 +189,17 @@ if (user == null) {
 							class="container flex-grow-1 d-flex justify-content-center align-items-center">
 							<div class="card p-4 mb-4">
 
-								<h4>Add City</h4>
+								<h2>Add City</h2>
 
-								<form id="cityForm">
-									<h6>select</h6>
-									<select id="stateSelect" onclick="loadStates()">
-	
-										
-									</select> <input type="text" id="cityname" class="form-control mb-3"
-										placeholder="City Name">
+								<form action="addCity" method="post">
 
-									<button class="btn btn-success" id="cityBtn" >Add City</button>
+									Select State <select id="stateSelect" name="statecode">
+
+										<option>Select State</option>
+
+									</select> <br> <br> City Name <input type="text" name="name">
+
+									<button>Add City</button>
 
 								</form>
 
@@ -219,27 +219,18 @@ if (user == null) {
 								<div class="card shadow p-4">
 									<h3 class="text-center mb-4">Add Location</h3>
 
-									<form>
-										<div class="mt-3">
-											<label class="form-label">Select City</label> <select
-												class="form-select text-dark border-dark" name="yesNoOption">
-												<option value="">-- Select --</option>
-												<option value="Yes">Sangamner</option>
-												<option value="No">pune</option>
-											</select>
-										</div>
 
-										<div class="mb-3 mt-3">
-											<label class="form-label">Location Name</label> <input
-												type="text" class="form-control"
-												placeholder="Enter location name" />
-										</div>
 
-										<div class="d-flex">
-											<button type="submit" class="btn btn-primary me-5">Add</button>
-											<button type="reset" class="btn btn-secondary">Cancel</button>
-										</div>
-									</form>
+									State <select id="stateSelect">
+										<option value="">Select State</option>
+									</select> <br> <br> City <select id="citySelect">
+										<option value="">Select City</option>
+									</select> <br> <br> Location Name <input type="text"
+										id="locationname"> <br> <br>
+
+									<button onclick="saveLocation()">Add Location</button>
+
+									<p id="msg"></p>
 								</div>
 							</div>
 						</div>
@@ -569,11 +560,9 @@ alert("Error : "+err);
 }
 }
 </script>
-	<script type="text/javascript">
-	window.onload=function(){
-		loadStates();
-		}
 
+	<!--save state  -->
+	<script type="text/javascript">
 	
 document.getElementById("stateForm").addEventListener("submit",function(event){
 
@@ -621,12 +610,10 @@ document.getElementById("stateForm").addEventListener("submit",function(event){
 	.catch(err=>{
 	alert("Error : "+err);
 	});
-
 	});
+</script>
 
-//load state and city
-
-
+	<!-- <script>
 
 function loadStates(){
 
@@ -637,7 +624,6 @@ fetch("/RentalPriceEstimationApp/admin/states")
 .then(data=>{
 
 let stateSelect=document.getElementById("stateSelect");
-let stateDropdown=document.getElementById("stateDropdown");
 
 data.forEach(s=>{
 
@@ -647,7 +633,6 @@ op.value=s.statecode;
 op.text=s.statename;
 
 stateSelect.appendChild(op);
-stateDropdown.appendChild(op.cloneNode(true));
 
 });
 
@@ -655,58 +640,125 @@ stateDropdown.appendChild(op.cloneNode(true));
 
 }
 
-// Add City
+window.onload=loadStates;
 
-document.getElementById("cityForm").addEventListener("submit",function(e){
+</script>
+ -->
+	<!--add location  -->
 
-e.preventDefault();
+	<!-- 	<script>
 
-let statecode=document.getElementById("stateSelect").value;
-let cityname=document.getElementById("cityname").value;
+function loadStates(){
 
-fetch("/RentalPriceEstimationApp/admin/savecity",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-name:cityname,
-statecode:statecode
-
-})
-
-})
-
-.then(res=>res.text())
-
-.then(msg=>{
-alert(msg);
-});
-
-});
-
-
-
-
-// Load City by State
-
-document.getElementById("stateDropdown").addEventListener("change",function(){
-
-let stateid=this.value;
-
-fetch("/RentalPriceEstimationApp/admin/city/"+stateid)
+fetch("/RentalPriceEstimationApp/admin/states")
 
 .then(res=>res.json())
 
 .then(data=>{
 
-let city=document.getElementById("cityDropdown");
+let stateSelect=document.getElementById("stateSelect");
 
-city.innerHTML="<option>Select City</option>";
+stateSelect.innerHTML="<option value=''>Select State</option>";
+
+data.forEach(s=>{
+
+let op=document.createElement("option");
+
+op.value=s.statecode;
+op.text=s.statename;
+
+stateSelect.appendChild(op);
+
+});
+
+});
+
+}
+
+function loadCities(){
+
+let statecode=document.getElementById("stateSelect").value;
+
+fetch("/RentalPriceEstimationApp/admin/cities/"+statecode)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let citySelect=document.getElementById("citySelect");
+
+citySelect.innerHTML="<option value=''>Select City</option>";
+
+data.forEach(c=>{
+
+let op=document.createElement("option");
+
+op.value=c.cid;
+op.text=c.name;
+
+citySelect.appendChild(op);
+
+});
+
+});
+
+}
+
+window.onload=function(){
+
+loadStates();
+
+document.getElementById("stateSelect").addEventListener("change",loadCities);
+
+}
+
+</script>
+ -->
+
+	<script>
+
+function loadStates(){
+
+fetch("/RentalPriceEstimationApp/admin/states")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let stateSelect=document.getElementById("stateSelect");
+
+stateSelect.innerHTML="<option value=''>Select State</option>";
+
+data.forEach(s=>{
+
+let op=document.createElement("option");
+
+op.value=s.statecode;
+op.text=s.statename;
+
+stateSelect.appendChild(op);
+
+});
+
+});
+
+}
+
+
+
+function loadCities(){
+
+let statecode=document.getElementById("stateSelect").value;
+
+fetch("/RentalPriceEstimationApp/admin/cities/"+statecode)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let citySelect=document.getElementById("citySelect");
+
+citySelect.innerHTML="<option value=''>Select City</option>";
 
 data.forEach(c=>{
 
@@ -715,88 +767,52 @@ let op=document.createElement("option");
 op.value=c.id;
 op.text=c.name;
 
-city.appendChild(op);
+citySelect.appendChild(op);
 
 });
 
 });
 
-});
+}
 
 
 
+function saveLocation(){
 
-// Add Location
-
-document.getElementById("locationForm").addEventListener("submit",function(e){
-
-e.preventDefault();
-
-let cityid=document.getElementById("cityDropdown").value;
 let locationname=document.getElementById("locationname").value;
 
-fetch("/RentalPriceEstimationApp/admin/savelocation",{
+let cid=document.getElementById("citySelect").value;
+
+fetch("/RentalPriceEstimationApp/admin/addLocation",{
 
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+"Content-Type":"application/x-www-form-urlencoded"
 },
 
-body:JSON.stringify({
-
-name:locationname,
-cityid:cityid
-
-})
+body:"locationname="+locationname+"&cid="+cid
 
 })
 
 .then(res=>res.text())
 
 .then(msg=>{
-alert(msg);
-});
 
-});
+document.getElementById("msg").innerHTML=msg;
 
-</script>
-<script type="text/javascript">
-<script type="text/javascript">
-function loadStates(){
-
-fetch("/RentalPriceEstimationApp/admin/states")
-
-.then(res=>res.json())
-
-.then(data=>{
-
-let stateSelect=document.getElementById("stateSelect");
-
-stateSelect.innerHTML="<option>Select State</option>";
-
-data.forEach(s=>{
-
-let op=document.createElement("option");
-
-op.value=s.statecode;
-op.text=s.statename;
-
-stateSelect.appendChild(op);
-
-});
-
-})
-
-.catch(err=>{
-
-console.log(err);
-alert("Error loading states");
+document.getElementById("locationname").value="";
 
 });
 
 }
-	<script>
+
+
+
+document.getElementById("stateSelect").addEventListener("change",loadCities);
+
+window.onload=loadStates;
+
 </script>
 </body>
 </html>
