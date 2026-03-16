@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springMvc.model.City;
 import org.springMvc.model.Location;
+import org.springMvc.model.Property;
 import org.springMvc.model.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -62,21 +63,38 @@ public class AdminRepoImpl implements AdminRepo {
 		jdbc.update(sql,c.getName(),c.getStatecode());
 		}
 
-		public void addLocation(Location l){
-
-			String sql="insert into location(locationname,cid) values(?,?)";
-
-			jdbc.update(sql,l.getLocationname(),l.getCid());
-
-			}
-
 		@Override
 		public void addLocation(String locationname,int cid){
-
 			String sql="insert into location(locationname,cid) values(?,?)";
-
 			jdbc.update(sql,locationname,cid);
-
 			}
+		@Override
+		public void saveLocation(Location loc) {
+			
+			String sql="insert into location(locationname,cid) values(?,?)";
+			jdbc.update(sql,
+			loc.getLocationname(),
+			loc.getCid()
+			);
+			 System.out.println("CID = "+loc.getCid());
+			 System.out.println("Location = "+loc.getLocationname());
+			
+		}
+
+		@Override
+		public List<Location> getLocations(int locationcode) {
+			String sql="select * from location where locationcode=?";
+
+			return jdbc.query(sql,new BeanPropertyRowMapper<>(Location.class),locationcode);
+
+		}
+
+		@Override
+		public void saveProperty(Property p) {
+			String sql="INSERT INTO property(locationcode,area_sqft,bedrooms,bathrooms,parking,metro_distance,price) values(?,?,?,?,?,?,?)";
+			jdbc.update(sql,
+					p.getLocationcode(),p.getArea_sqft(),p.getBedrooms(),p.getBathrooms(),p.isParking(),p.getMetro_distance(),p.getPrice()
+			);
+		}
 
 }

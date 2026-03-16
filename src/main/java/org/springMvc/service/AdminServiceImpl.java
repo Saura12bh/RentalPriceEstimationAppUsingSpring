@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springMvc.model.City;
 import org.springMvc.model.Location;
+import org.springMvc.model.Property;
 import org.springMvc.model.State;
 import org.springMvc.repo.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +43,28 @@ public class AdminServiceImpl implements AdminService {
 				adminRepo.addCity(c);
 		}
 
-	public void addLocation(Location l){
-		adminRepo.addLocation(l);
-		}
-
 	@Override
 	public void addLocation(String locationname, int cid) {
 	
 		adminRepo.addLocation(locationname, cid);
 	}
+	@Override
+	public void saveLocation(Location loc) {
+		
+		adminRepo.saveLocation(loc);
+		
+	}
+
+	@Override
+	public List<Location> getLocations(int locationcode) {
+		// TODO Auto-generated method stub
+		return adminRepo.getLocations(locationcode);
+	}
+
+	@Override
+	public void saveProperty(Property p) {
+	adminRepo.saveProperty(p);	
+	}
+
+
 }
