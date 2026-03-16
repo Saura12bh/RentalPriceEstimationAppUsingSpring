@@ -5,6 +5,7 @@ import java.util.List;
 import org.springMvc.model.City;
 import org.springMvc.model.Location;
 import org.springMvc.model.Property;
+import org.springMvc.model.PropertyDisplay;
 import org.springMvc.model.State;
 import org.springMvc.repo.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,12 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void saveProperty(Property p) {
 	adminRepo.saveProperty(p);	
+	}
+
+	@Override
+	public List<PropertyDisplay> getAllProperty() {
+		// TODO Auto-generated method stub
+		return adminRepo.getAllProperty();
 	}
 
 

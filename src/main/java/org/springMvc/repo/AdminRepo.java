@@ -5,6 +5,7 @@ import java.util.List;
 import org.springMvc.model.City;
 import org.springMvc.model.Location;
 import org.springMvc.model.Property;
+import org.springMvc.model.PropertyDisplay;
 import org.springMvc.model.State;
 
 public interface AdminRepo {
@@ -18,4 +19,7 @@ public interface AdminRepo {
 	
 	public List<Location> getLocations(int locationcode);
 	public void saveProperty(Property p);
+	
+	public List<PropertyDisplay> getAllProperty();
+
 }

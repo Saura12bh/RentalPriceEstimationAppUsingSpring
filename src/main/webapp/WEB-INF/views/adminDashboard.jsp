@@ -46,7 +46,7 @@ if (user == null) {
 					<button class="btn btn-outline-light mb-2"
 						onclick="showSection('addloc')">Add location</button>
 					<button class="btn btn-outline-light mb-2"
-						onclick="showSection('searchForm');">Display Property</button>
+						onclick="showSection('searchForm'); loadProperty();">Display Property</button>
 					<button class="btn btn-outline-light"
 						onclick="(showSection('displayData'), display());">
 						Display User</button>
@@ -192,7 +192,8 @@ if (user == null) {
 									<th>Actions</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="propertyTable"></tbody>
+							<!-- <tbody>
 								<tr>
 									<td>1</td>
 									<td>Maharashtra</td>
@@ -222,8 +223,8 @@ if (user == null) {
 									<td><a href="updateProperty.jsp?id=2"
 										class="btn btn-warning btn-sm">Update</a> <a href="#"
 										class="btn btn-danger btn-sm">Delete</a></td>
-								</tr>
-							</tbody>
+								</tr> 
+							</tbody>-->
 						</table>
 					</div>
 				</div>
@@ -555,6 +556,47 @@ locationSelect.appendChild(op);
 		document.getElementById("ssl").addEventListener("change",loadC);
 		document.getElementById("cs").addEventListener("change",loadL);
 		});
+</script>
+<script type="text/javascript">
+
+function loadProperty(){
+
+	fetch("/RentalPriceEstimationApp/admin/properties")
+
+	.then(res=>res.json())
+
+	.then(data=>{
+
+	console.log(data);
+
+	let tb=document.getElementById("propertyTable");
+
+	tb.innerHTML="";
+
+	data.forEach(function(p){
+
+	let tr=document.createElement("tr");
+
+	tr.innerHTML=
+	"<td>"+p.property_id+"</td>"+
+	"<td>"+p.statename+"</td>"+
+	"<td>"+p.city+"</td>"+
+	"<td>"+p.locationname+"</td>"+
+	"<td>"+p.area_sqft+"</td>"+
+	"<td>"+p.bedrooms+"</td>"+
+	"<td>"+p.bathrooms+"</td>"+
+	"<td>"+(p.parking ? "Yes":"No")+"</td>"+
+	"<td>"+p.metro_distance+"</td>"+
+	"<td>"+p.price+"</td>"+
+	"<td><button class='btn btn-danger btn-sm'>Delete</button></td>";
+
+	tb.appendChild(tr);
+
+	});
+
+	});
+
+	}
 </script>
 </body>
 </html>

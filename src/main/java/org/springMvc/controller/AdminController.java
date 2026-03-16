@@ -2,6 +2,7 @@ package org.springMvc.controller;
 import org.springMvc.model.City;
 import org.springMvc.model.Location;
 import org.springMvc.model.Property;
+import org.springMvc.model.PropertyDisplay;
 import org.springMvc.model.State;
 import java.util.List;
 
@@ -129,6 +130,13 @@ public class AdminController {
 		    adminService.saveProperty(p);
 		    return "Property Added Successfully";
 		}
-		
+		//display properties
+		@GetMapping("/properties")
+		@ResponseBody
+		public List<PropertyDisplay> getAllProperty(){
+
+		return adminService.getAllProperty();
+
+		}
 }
 
