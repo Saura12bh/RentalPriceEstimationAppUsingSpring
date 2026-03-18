@@ -72,6 +72,16 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminRepo.getAllProperty();
 	}
-
+	
+	@Override
+	public List<Property> searchProperty(String city) {
+		// TODO Auto-generated method stub
+		return adminRepo.searchProperty(city);
+	}
+	
+	@Override
+	public void deleteProperty(int id) {
+	    adminRepo.deleteProperty(id);
+	}
 
 }

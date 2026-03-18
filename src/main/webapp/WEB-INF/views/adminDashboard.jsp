@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -55,39 +56,103 @@ if (user == null) {
 			</div>
 			<!-- Main Content -->
 			<div class="col-md-9 col-lg-10 p-4">
-				<!-- Add Expenditure -->
-				<div id="addForm" class="section">
-					<div class="row align-items-center">
-						<div class="container mt-5">
+    <div id="addForm" class="section">
+    <div class="row align-items-center">
+        <div class="container mt-5 ">
 
-							<h3>Add Property</h3>
+            <h3 class="text-light mb-4">Add Property</h3>
 
-							State<select id="ssl" onchange="loadC()">
-								<option value="">Select State</option>
+            <!-- STATE -->
+            <div class="mb-3">
+                <label class="form-label text-light" >Select State</label>
+                <select id="ssl" onchange="loadC()" 
+                        class="form-select bg-dark text-light border-light">
+                    <option value="">Select State</option>
+                </select>
+            </div>
 
-							</select> <br> <br> City <select id="cs" onchange="loadL()">
-								<option value="">Select City</option>
-							</select> </select> <br> <br> </select> <br> <br> Location <select
-								id="cl">
-								<option value="">Select location</option>
-							</select> </select> <br> <br> Area (sqft) <input type="text"
-								id="area_sqft"> <br> <br> Bedrooms <input
-								type="number" id="bedrooms"> <br> <br>
-							Bathrooms <input type="number" id="bathrooms"> <br>
-							<br> Parking <select id="parking">
-								<option value="true">Yes</option>
-								<option value="false">No</option>
-							</select> <br> <br> Metro Distance (Meter) <input type="text"
-								id="metro_distance"> <br> Price (₹) <input
-								type="text" id="price"> <br> <br>
+            <!-- CITY -->
+            <div class="mb-3">
+                <label class="form-label text-light">Select City</label>
+                <select id="cs" onchange="loadL()" 
+                        class="form-select bg-dark text-light border-light">
+                    <option value="">Select City</option>
+                </select>
+            </div>
 
-							<button type="button" onclick="saveProperty()">Add
-								Property</button>
+            <!-- LOCATION -->
+            <div class="mb-3">
+                <label class="form-label text-light">Select Location</label>
+                <select id="cl" 
+                        class="form-select bg-dark text-light border-light">
+                    <option value="">Select Location</option>
+                </select>
+            </div>
 
-							<p id="msg"></p>
-						</div>
-					</div>
-				</div>
+            <!-- AREA -->
+            <div class="mb-3">
+                <label class="form-label text-light">Area (sq ft)</label>
+                <input type="number" id="area_sqft" 
+                       class="form-control bg-dark text-light border-light" >
+            </div>
+
+            <!-- BEDROOMS -->
+            <div class="mb-3">
+                <label class="form-label text-light">Bedrooms</label>
+                <input type="number" id="bedrooms" 
+                       class="form-control bg-dark text-light border-light">
+            </div>
+
+            <!-- BATHROOMS -->
+            <div class="mb-3">
+                <label class="form-label text-light">Bathrooms</label>
+                <input type="number" id="bathrooms" 
+                       class="form-control bg-dark text-light border-light">
+            </div>
+
+            <!-- PARKING -->
+            <div class="mb-3">
+                <label class="form-label text-light">Parking</label>
+                <select id="parking" 
+                        class="form-select bg-dark text-light border-light">
+                    <option value="">Select</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <!-- METRO -->
+            <div class="mb-3">
+                <label class="form-label text-light">Metro Distance (Meter)</label>
+                <input type="number" id="metro_distance" 
+                       class="form-control bg-dark text-light border-light">
+            </div>
+
+            <!-- PRICE -->
+            <div class="mb-3">
+                <label class="form-label text-light">Price (₹)</label>
+                <input type="number" id="price" 
+                       class="form-control bg-dark text-light border-light">
+            </div>
+
+            <!-- BUTTONS -->
+            <button type="button" onclick="saveProperty()" 
+                    class="btn btn-outline-primary mt-3 me-3">
+                Add Property
+            </button>
+
+            <button type="button" onclick="clearForm()" 
+                    class="btn btn-outline-danger mt-3">
+                Clear
+            </button>
+
+            <p id="msg" class="text-success mt-3"></p>
+
+        </div>
+    </div>
+</div>
+
+
 				<!-- add state  -->
 				<div id="addState" class="section mt-5 d-none">
 					<div class="overlay">
@@ -119,46 +184,90 @@ if (user == null) {
 					</div>
 				</div>
 				<!-- add city  -->
-				<div id="addcity" class="section d-none mt-5">
-					<div class="overlay">
-						<!-- Login Section -->
-						<div
-							class="container flex-grow-1 d-flex justify-content-center align-items-center">
-							<div class="card p-4 mb-4">
-								<h2>Add City</h2>
-								<form action="/RentalPriceEstimationApp/admin/addCity"
-									method="post">
-									Select State <select id="stateSelectCity" name="statecode">
-										<option value="">Select State</option>
-									</select> <br> <br> City Name <input type="text" name="name">
-									<button>Add City</button>
-								</form>
-							</div>
+				<div id="addcity" class="section mt-5 d-none">
+	<div class="overlay">
+		<div class="container flex-grow-1 d-flex justify-content-center align-items-center">
+			<div class="col-md-4">
+				<div class="card shadow p-4">
+					<h3 class="text-center mb-4">Add City</h3>
+
+					<form id="cityForm">
+
+						<div class="mb-3">
+							<label class="form-label">Select State</label>
+							<select id="stateSelectCity" name="statecode" class="form-control" required>
+								<option value="">Select State</option>
+							</select>
 						</div>
-					</div>
+
+						<div class="mb-3">
+							<label class="form-label">City Name</label>
+							<input type="text" class="form-control" id="cityname"
+								placeholder="Enter city name" required />
+						</div>
+
+						<div class="d-flex">
+							<button type="submit" class="btn btn-primary me-3">Add</button>
+							<button type="reset" class="btn btn-secondary">Cancel</button>
+						</div>
+
+					</form>
+
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
 				<!-- add location  -->
 				<div id="addloc" class="section mt-5 d-none">
-					<div class="overlay">
-						<!-- Login Section -->
-						<div
-							class="container flex-grow-1 d-flex justify-content-center align-items-center">
-							<div class="col-md-4">
-								<div class="card shadow p-4">
-									<h3 class="text-center mb-4">Add Location</h3>
-									State<select id="stateSelectLocation" onchange="loadCities()">
-										<option value="">Select State</option>
-									</select> <br> <br> City <select id="citySelect" name="cityid">
-										<option value="">Select City</option>
-									</select> <br> <br> Location Name <input type="text"
-										id="locationname"> <br> <br>
-									<button onclick="saveLocation()">Add Location</button>
-									<p id="msg"></p>
-								</div>
-							</div>
+	<div class="overlay">
+		<div class="container flex-grow-1 d-flex justify-content-center align-items-center">
+			<div class="col-md-4">
+				<div class="card shadow p-4">
+
+					<h3 class="text-center mb-4">Add Location</h3>
+
+					<form>
+
+						<div class="mb-3">
+							<label class="form-label">Select State</label>
+							<select id="stateSelectLocation" onchange="loadCities()" class="form-control">
+								<option value="">Select State</option>
+							</select>
 						</div>
-					</div>
+
+						<div class="mb-3">
+							<label class="form-label">Select City</label>
+							<select id="citySelect" name="cityid" class="form-control">
+								<option value="">Select City</option>
+							</select>
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">Location Name</label>
+							<input type="text" id="locationname" class="form-control"
+								placeholder="Enter location name">
+						</div>
+
+						<div class="d-flex">
+							<button type="button" onclick="saveLocation()" class="btn btn-primary me-3">
+								Add
+							</button>
+
+							<button type="reset" class="btn btn-secondary">
+								Cancel
+							</button>
+						</div>
+
+						<p id="msg" class="mt-3 text-center"></p>
+
+					</form>
+
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
 				<!-- Search -->
 				<div id="searchForm" class="section d-none">
 					<div class="container mt-5">
@@ -167,12 +276,12 @@ if (user == null) {
 						<div class="row mb-4">
 							<div class="col-md-4">
 								<label class="form-label">Search By City</label> <input
-									type="text"
+									type="text" id="searchCity"
 									class="form-control bg-dark text-light border-secondary"
 									placeholder="Enter city" />
 							</div>
 							<div class="col-md-2 d-flex align-items-end">
-								<button type="button" class="btn btn-primary w-100">Search</button>
+								<button type="button" onclick="searchProperty()" class="btn btn-primary w-100">Search</button>
 							</div>
 						</div>
 						<!-- Property Table -->
@@ -189,7 +298,8 @@ if (user == null) {
 									<th>Parking</th>
 									<th>Metro Distance</th>
 									<th>Price</th>
-									<th>Actions</th>
+									<!-- <th>Actions</th> -->
+									<th id="actionHeader">Actions</th>
 								</tr>
 							</thead>
 							<tbody id="propertyTable"></tbody>
@@ -523,15 +633,14 @@ locationSelect.appendChild(op);
 	//save property
 	function saveProperty(){	
 		let property={
-				locationcode:document.getElementById("cl").value,
-				area_sqft:document.getElementById("area_sqft").value,
-				bedrooms:document.getElementById("bedrooms").value,
-				bathrooms:document.getElementById("bathrooms").value,
-				parking:document.getElementById("parking").value === "true",
-				metro_distance:document.getElementById("metro_distance").value,
-				price:document.getElementById("price").value
-				};
-
+			    locationcode: Number(document.getElementById("cl").value),
+			    area_sqft: Number(document.getElementById("area_sqft").value),
+			    bedrooms: Number(document.getElementById("bedrooms").value),
+			    bathrooms: Number(document.getElementById("bathrooms").value),
+			    parking: document.getElementById("parking").value === "true",
+			    metro_distance: Number(document.getElementById("metro_distance").value),
+			    price: Number(document.getElementById("price").value)
+			};
 		fetch("/RentalPriceEstimationApp/admin/saveProperty",{
 		method:"POST",
 		headers:{
@@ -588,8 +697,10 @@ function loadProperty(){
 	"<td>"+(p.parking ? "Yes":"No")+"</td>"+
 	"<td>"+p.metro_distance+"</td>"+
 	"<td>"+p.price+"</td>"+
-	"<td><button class='btn btn-danger btn-sm'>Delete</button></td>";
-
+	"<td>" +
+	"<button class='btn btn-danger btn-sm me-2' onclick='deleteProperty("+p.property_id+")'>Delete</button>" +
+	"<button class='btn btn-success btn-sm'>Update</button>" +
+	"</td>";
 	tb.appendChild(tr);
 
 	});
@@ -597,7 +708,161 @@ function loadProperty(){
 	});
 
 	}
+	//clear fild
+function clearForm(){
+    document.getElementById("ssl").value = "";
+    document.getElementById("cs").innerHTML = "<option value=''>Select City</option>";
+    document.getElementById("cl").innerHTML = "<option value=''>Select Location</option>";
+    document.getElementById("area_sqft").value = "";
+    document.getElementById("bedrooms").value = "";
+    document.getElementById("bathrooms").value = "";
+    document.getElementById("parking").value = "";
+    document.getElementById("metro_distance").value = "";
+    document.getElementById("price").value = "";
+}
+function saveProperty(){
+
+    let location = document.getElementById("cl").value;
+    let area = document.getElementById("area_sqft").value;
+    let bedrooms = document.getElementById("bedrooms").value;
+    let bathrooms = document.getElementById("bathrooms").value;
+    let parking = document.getElementById("parking").value;
+    let metro = document.getElementById("metro_distance").value;
+    let price = document.getElementById("price").value;
+
+    // ================= VALIDATION =================
+
+    if(location === ""){
+        alert("All fields are required");
+        return;
+    }
+
+    if(area === "" || Number(area) <= 0){
+        alert("Enter valid Area");
+        return;
+    }
+
+    if(bedrooms === "" || Number(bedrooms) <= 0){
+        alert("Enter valid Bedrooms");
+        return;
+    }
+
+    if(bathrooms === "" || Number(bathrooms) <= 0){
+        alert("Enter valid Bathrooms");
+        return;
+    }
+
+    if(parking === ""){
+        alert("Select Parking");
+        return;
+    }
+
+    if(metro === "" || Number(metro) < 0){
+        alert("Enter valid Metro Distance");
+        return;
+    }
+
+    if(price === "" || Number(price) <= 0){
+        alert("Enter valid Price");
+        return;
+    }
+
+    // ================= API CALL =================
+
+    let property={
+        locationcode: Number(location),
+        area_sqft: Number(area),
+        bedrooms: Number(bedrooms),
+        bathrooms: Number(bathrooms),
+        parking: parking === "true",
+        metro_distance: Number(metro),
+        price: Number(price)
+    };
+
+    fetch("/RentalPriceEstimationApp/admin/saveProperty",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(property)
+    })
+    .then(res=>res.text())
+    .then(msg=>{
+        alert(msg);
+        clearForm();
+    });
+}
+
+</script>
+
+<!--search city  -->
+<script type="text/javascript">
+function searchProperty(){
+
+    let city = document.getElementById("searchCity").value;
+
+    if(city === ""){
+        alert("Enter city name");
+        return;
+    }
+
+    document.getElementById("actionHeader").style.display = "none";
+    
+    fetch("/RentalPriceEstimationApp/admin/search/" + city)
+    .then(res => res.json())
+    .then(data => {
+
+        let tb = document.getElementById("propertyTable");
+        tb.innerHTML = "";
+
+        data.forEach(function(p){
+
+            let tr = document.createElement("tr");
+
+            tr.innerHTML =
+            "<td>"+p.property_id+"</td>"+
+            "<td>"+p.statename+"</td>"+
+            "<td>"+p.city+"</td>"+
+            "<td>"+p.locationname+"</td>"+
+            "<td>"+p.area_sqft+"</td>"+
+            "<td>"+p.bedrooms+"</td>"+
+            "<td>"+p.bathrooms+"</td>"+
+            "<td>"+(p.parking ? "Yes":"No")+"</td>"+
+            "<td>"+p.metro_distance+"</td>"+
+            "<td>"+p.price+"</td>";
+
+            tb.appendChild(tr);
+        });
+
+    })
+    .catch(err=>{
+        alert("Error: " + err);
+    });
+}
+</script>
+
+<!-- delete proprty -->
+<script type="text/javascript">
+function deleteProperty(id){
+
+    if(!confirm("Are you sure you want to delete?")){
+        return;
+    }
+
+    fetch("/RentalPriceEstimationApp/admin/delete/" + id, {
+        method: "DELETE"
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+
+        // 👉 table refresh
+        loadProperty();  
+    })
+    .catch(err => {
+        alert("Error: " + err);
+    });
+}
 </script>
 </body>
 </html>
-

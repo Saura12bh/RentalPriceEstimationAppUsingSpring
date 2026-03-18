@@ -15,6 +15,29 @@ public class Property {
 
 	    private float metro_distance;
 	    private int price;
+	    
+	    private String statename;
+	    private String city;
+	    private String locationname;
+	    
+		public String getStatename() {
+			return statename;
+		}
+		public void setStatename(String statename) {
+			this.statename = statename;
+		}
+		public String getCity() {
+			return city;
+		}
+		public void setCity(String city) {
+			this.city = city;
+		}
+		public String getLocationname() {
+			return locationname;
+		}
+		public void setLocationname(String locationname) {
+			this.locationname = locationname;
+		}
 		public int getProperty_id() {
 			return property_id;
 		}
@@ -63,4 +86,5 @@ public class Property {
 		public void setPrice(int price) {
 			this.price = price;
 		}
+
 }

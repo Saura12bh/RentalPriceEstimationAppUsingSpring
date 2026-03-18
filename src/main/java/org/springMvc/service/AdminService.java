@@ -20,4 +20,7 @@ public interface AdminService {
 	public void saveProperty(Property p);
 
 	public List<PropertyDisplay> getAllProperty();
+	
+	public List<Property> searchProperty(String city);
+	public void deleteProperty(int id);
 }

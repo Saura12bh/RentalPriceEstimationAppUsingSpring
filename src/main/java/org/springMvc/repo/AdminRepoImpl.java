@@ -1,5 +1,7 @@
 package org.springMvc.repo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springMvc.model.City;
@@ -10,6 +12,7 @@ import org.springMvc.model.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -141,4 +144,47 @@ public class AdminRepoImpl implements AdminRepo {
 
 			}
 
+			//search and delete property
+		@Override
+		public List<Property> searchProperty(String city) {
+			
+			 List<Property> list = jdbc.query(
+				        "SELECT p.property_id, s.statename, c.name AS city, l.locationname, " +
+				        "p.area_sqft, p.bedrooms, p.bathrooms, p.parking, p.metro_distance, p.price " +
+				        "FROM property p " +
+				        "JOIN location l ON p.locationcode=l.locationcode " +
+				        "JOIN city c ON l.cid=c.id " +
+				        "JOIN state s ON c.statecode=s.statecode " +
+				        "WHERE c.name LIKE '%" + city + "%'",
+				        
+				        new RowMapper<Property>() {
+
+				            @Override
+				            public Property mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+				                Property p = new Property();
+
+				                p.setProperty_id(rs.getInt("property_id"));
+				                p.setStatename(rs.getString("statename"));
+				                p.setCity(rs.getString("city"));
+				                p.setLocationname(rs.getString("locationname"));
+				                p.setArea_sqft(rs.getInt("area_sqft"));
+				                p.setBedrooms(rs.getInt("bedrooms"));
+				                p.setBathrooms(rs.getInt("bathrooms"));
+				                p.setParking(rs.getBoolean("parking"));
+				                p.setMetro_distance(rs.getInt("metro_distance"));
+				                p.setPrice(rs.getInt("price"));
+
+				                return p;
+				            }
+				        });
+
+				    return list;
+		}
+
+		@Override
+		public void deleteProperty(int id) {
+		    String sql = "DELETE FROM property WHERE property_id = ?";
+		    jdbc.update(sql, id);
+		}
 }
