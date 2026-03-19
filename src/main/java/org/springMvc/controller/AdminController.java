@@ -1,5 +1,6 @@
 package org.springMvc.controller;
 import org.springMvc.model.City;
+import org.springMvc.model.Inquiry;
 import org.springMvc.model.Location;
 import org.springMvc.model.Property;
 import org.springMvc.model.PropertyDisplay;
@@ -168,6 +169,10 @@ public class AdminController {
 		        return adminService.updateProperty(p) ? "Property Updated" : "Update Failed";
 		    }
 
-		  
+		  @GetMapping("/getAllInquiries")
+		  @ResponseBody
+		  public List<Inquiry> getAllInquiries() {
+		      return adminService.getAllInquiries();
+		  }
 }
 

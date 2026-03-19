@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springMvc.model.City;
+import org.springMvc.model.Inquiry;
 import org.springMvc.model.Location;
 import org.springMvc.model.Property;
 import org.springMvc.model.PropertyDisplay;
@@ -21,6 +22,16 @@ public class AdminRepoImpl implements AdminRepo {
 	
 	@Autowired
 	JdbcTemplate jdbc;
+	
+	//inquery
+	public int saveInquiry(Inquiry inquiry) {
+        String sql = "INSERT INTO inquiry(name, email, message) VALUES (?, ?, ?)";
+        return jdbc.update(sql,
+                inquiry.getName(),
+                inquiry.getEmail(),
+                inquiry.getMessage()
+        );
+    }
 	
 	public boolean existsByStatename(String statename) {
 		String sql = "SELECT COUNT(*) FROM state WHERE statename = ?";
@@ -218,4 +229,18 @@ public class AdminRepoImpl implements AdminRepo {
 			    return list.get(0);
 			}
 
+		  //inquiry
+		  public List<Inquiry> getAllInquiries() {
+
+			    String sql = "SELECT * FROM inquiry ORDER BY id DESC";
+
+			    return jdbc.query(sql, (rs, rowNum) -> {
+			        Inquiry i = new Inquiry();
+			        i.setId(rs.getInt("id"));
+			        i.setName(rs.getString("name"));
+			        i.setEmail(rs.getString("email"));
+			        i.setMessage(rs.getString("message"));
+			        return i;
+			    });
+			}
 }

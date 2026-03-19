@@ -3,6 +3,7 @@ package org.springMvc.service;
 import java.util.List;
 
 import org.springMvc.model.City;
+import org.springMvc.model.Inquiry;
 import org.springMvc.model.Location;
 import org.springMvc.model.Property;
 import org.springMvc.model.PropertyDisplay;
@@ -27,4 +28,7 @@ public interface AdminService {
 
 	 public Property getPropertyById(int id);
 	 public boolean updateProperty(Property p);
+	 
+	 public String saveInquiry(Inquiry inquiry);
+	 public List<Inquiry> getAllInquiries();
 }

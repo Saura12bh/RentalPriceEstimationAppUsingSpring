@@ -3,6 +3,7 @@ package org.springMvc.repo;
 import java.util.List;
 
 import org.springMvc.model.City;
+import org.springMvc.model.Inquiry;
 import org.springMvc.model.Location;
 import org.springMvc.model.Property;
 import org.springMvc.model.PropertyDisplay;
@@ -26,4 +27,7 @@ public interface AdminRepo {
 
 	 public int updateProperty(Property p);
 	 public Property getPropertyById(int id);
+	 
+	 public int saveInquiry(Inquiry inquiry);
+	 public List<Inquiry> getAllInquiries();
 }

@@ -3,6 +3,7 @@ package org.springMvc.service;
 import java.util.List;
 
 import org.springMvc.model.City;
+import org.springMvc.model.Inquiry;
 import org.springMvc.model.Location;
 import org.springMvc.model.Property;
 import org.springMvc.model.PropertyDisplay;
@@ -33,6 +34,9 @@ public class AdminServiceImpl implements AdminService {
 
 	public List<State> getStates() {
 		return adminRepo.getStates();
+	}
+	public List<Inquiry> getAllInquiries() {
+	    return adminRepo.getAllInquiries();
 	}
 	
 	
@@ -90,5 +94,16 @@ public class AdminServiceImpl implements AdminService {
 	    }
 	 public boolean updateProperty(Property p){
 	        return adminRepo.updateProperty(p) > 0;
+	    }
+	 
+	 //inquery
+	 public String saveInquiry(Inquiry inquiry) {
+	        int result = adminRepo.saveInquiry(inquiry);
+
+	        if(result > 0) {
+	            return "Inquiry Submitted Successfully! Thank you for Valueable time...";
+	        } else {
+	            return "Failed to Submit Inquiry";
+	        }
 	    }
 }

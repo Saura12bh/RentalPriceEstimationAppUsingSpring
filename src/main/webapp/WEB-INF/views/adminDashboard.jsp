@@ -31,7 +31,7 @@ if (user == null) {
 			<div class="col-md-3 col-lg-2 bg-secondary min-vh-100 p-3">
 				<h5 class="text-center mb-4">Menu</h5>
 				<marquee direction="left" scrollamount="6" behavior="scroll"
-					class="text-warning fw-bold">  Welcome ${un} </marquee>
+					class="text-warning fw-bold"> Welcome ${un} </marquee>
 				<div class="nav flex-column">
 					<!-- add property -->
 					<button class="btn btn-outline-light mb-2"
@@ -45,9 +45,14 @@ if (user == null) {
 					<button class="btn btn-outline-light mb-2"
 						onclick="showSection('searchForm'); loadProperty();">Display
 						Property</button>
-					<button class="btn btn-outline-light"
+					<button class="btn btn-outline-light mb-2"
 						onclick="(showSection('displayData'), display());">
 						Display User</button>
+
+					<button class="btn btn-outline-light "
+						onclick="showSection('displayInquery');displayInquery();">View
+						Inquiry</button>
+						
 					<a class="btn btn-danger mt-5" href="logout">Log Out</a>
 				</div>
 			</div>
@@ -300,6 +305,24 @@ if (user == null) {
 							</thead>
 							<tbody id="propertyTable"></tbody>
 						</table>
+					</div>
+				</div>
+				<!--Display inquery  -->
+				<div id="displayInquery" class="section d-none">
+					<div class="container mt-5">
+						<h2 class="mb-4">Display Inquiry</h2>
+						<table class="table table-dark table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Email</th>
+									<th>Message</th>
+								</tr>
+							</thead>
+							<tbody id="tbb">
+							</tbody>
+							</table>
 					</div>
 				</div>
 				<!-- Display User -->
@@ -929,6 +952,49 @@ function updatePropertyData(){
     })
     .catch(err => {
         alert("Error: " + err);
+    });
+}
+
+function displayInquery() {
+
+    fetch("/RentalPriceEstimationApp/admin/getAllInquiries")
+    .then((res) => {
+        return res.json();
+    })
+    .then((data) => {
+
+        console.log(data);
+
+        let tb = document.getElementById("tbb"); // correct table id
+        tb.innerHTML = ""; // clear once
+
+        data.forEach(ele => {
+
+            let tr = document.createElement("tr");
+
+            let tdid = document.createElement("td");
+            tdid.innerText = ele.id;
+
+            let tdname = document.createElement("td");
+            tdname.innerText = ele.name;
+
+            let tdemail = document.createElement("td");
+            tdemail.innerText = ele.email;
+
+            let tdmessage = document.createElement("td");
+            tdmessage.innerText = ele.message;
+
+            tr.appendChild(tdid);
+            tr.appendChild(tdname);
+            tr.appendChild(tdemail);
+            tr.appendChild(tdmessage);
+
+            tb.appendChild(tr);
+        });
+
+    })
+    .catch((err) => {
+        console.log("Error:", err);
     });
 }
 </script>
