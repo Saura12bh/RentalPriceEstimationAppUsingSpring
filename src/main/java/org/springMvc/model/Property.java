@@ -84,7 +84,8 @@ public class Property {
 			return price;
 		}
 		public void setPrice(int price) {
-			this.price = price;
+		    this.price = price;
 		}
+		
 
 }

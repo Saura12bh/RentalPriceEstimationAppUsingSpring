@@ -26,8 +26,8 @@ if (user == null) {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-black">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <marquee>Welcome ${un}</marquee>
+        <a class="navbar-brand" href="">
+            <marquee class="text-warning fw-bold">Welcome ${un}</marquee>
         </a>
 
         <div class="ms-auto">
@@ -135,9 +135,13 @@ if (user == null) {
 </div>
 
 <div class="mt-4 text-center">
-<button type="button" class="btn btn-primary me-2" onclick="saveProperty()">Predict</button>
 <button type="reset" class="btn btn-secondary">Clear</button>
+
+<button type="button" class="btn btn-success" onclick="predictRent()">Predict Rent</button>
+
 </div>
+
+<h3 id="result" class="text-center mt-4 text-warning"></h3>
 
 </form>
 
@@ -399,10 +403,112 @@ function hideProfile() {
     document.getElementById("profileForm").classList.add("d-none");
     document.getElementById("addForm").classList.remove("d-none");
 }
-
-
-// === Existing property form functions here (loadStates, loadC, loadL, saveProperty, etc.) ===
 </script>
+<!-- predict rent -->
+<script type="text/javascript">
 
+function predictRent(){
+
+
+	let state = document.getElementById("ssl").value;
+	let city = document.getElementById("cs").value;
+	let location = document.getElementById("cl").value;
+	let area = document.getElementById("area_sqft").value;
+	let bed = document.getElementById("bedrooms").value;
+	let bath = document.getElementById("bathrooms").value;
+	let metro = document.getElementById("metro_distance").value;
+	let parking = document.getElementById("parking").value;
+
+	// ✅ VALIDATION
+
+	if(state==""){
+	alert("Please select state");
+	return;
+	}
+
+	if(city==""){
+	alert("Please select city");
+	return;
+	}
+
+	if(location==""){
+	alert("Please select location");
+	return;
+	}
+
+	if(area=="" || area<=0){
+	alert("Enter valid area (sq ft)");
+	return;
+	}
+
+	if(area > 5000){
+	alert("Area too large (Max 5000 allowed)");
+	return;
+	}
+
+	if(bed=="" || bed<=0){
+	alert("Enter valid bedrooms");
+	return;
+	}
+
+	if(bed > 10){
+	alert("Max 10 bedrooms allowed");
+	return;
+	}
+
+	if(bath=="" || bath<=0){
+	alert("Enter valid bathrooms");
+	return;
+	}
+
+	if(bath > 10){
+	alert("Max 10 bathrooms allowed");
+	return;
+	}
+
+	if(metro=="" || metro<0){
+	alert("Enter valid metro distance");
+	return;
+	}
+
+	if(metro > 50000){
+	alert("Metro distance too high");
+	return;
+	}
+
+	if(parking==""){
+	alert("Select parking option");
+	return;
+	}
+
+
+	let property={
+	locationcode: Number(location),
+	area_sqft: Number(area),
+	bedrooms: Number(bed),
+	bathrooms: Number(bath),
+	metro_distance: Number(metro),
+	parking: parking === "true"
+	};
+
+
+	fetch("/RentalPriceEstimationApp/user/predict",{
+	method:"POST",
+	headers:{
+	"Content-Type":"application/json"
+	},
+	body:JSON.stringify(property)
+	})
+	.then(res=>res.json())
+	.then(data=>{
+	document.getElementById("result").innerText =
+	"Predicted Rent ₹ : " + data.price;
+	})
+	.catch(err=>{
+	alert("Error : "+err);
+	});
+
+	}
+</script>
 </body>
 </html>

@@ -84,4 +84,11 @@ public class AdminServiceImpl implements AdminService {
 	    adminRepo.deleteProperty(id);
 	}
 
+	//update
+	 public Property getPropertyById(int id){
+	        return adminRepo.getPropertyById(id);
+	    }
+	 public boolean updateProperty(Property p){
+	        return adminRepo.updateProperty(p) > 0;
+	    }
 }

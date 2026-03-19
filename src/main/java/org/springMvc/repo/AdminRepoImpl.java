@@ -86,10 +86,10 @@ public class AdminRepoImpl implements AdminRepo {
 		}
 
 		@Override
-		public List<Location> getLocations(int locationcode) {
-			String sql="select * from location where locationcode=?";
+		public List<Location> getLocations(int cid) {
+			String sql="select * from location where cid=?";
 
-			return jdbc.query(sql,new BeanPropertyRowMapper<>(Location.class),locationcode);
+			return jdbc.query(sql,new BeanPropertyRowMapper<>(Location.class),cid);
 
 		}
 
@@ -187,4 +187,35 @@ public class AdminRepoImpl implements AdminRepo {
 		    String sql = "DELETE FROM property WHERE property_id = ?";
 		    jdbc.update(sql, id);
 		}
+		
+		//update
+		  public int updateProperty(Property p){
+		        String sql = "UPDATE property SET locationcode=?, area_sqft=?, bedrooms=?, bathrooms=?, parking=?, metro_distance=?, price=? WHERE property_id=?";
+
+		        return jdbc.update(sql,
+		                p.getLocationcode(),
+		                p.getArea_sqft(),
+		                p.getBedrooms(),
+		                p.getBathrooms(),
+		                p.isParking(),
+		                p.getMetro_distance(),
+		                p.getPrice(),
+		                p.getProperty_id()
+		        );
+		    }
+		  
+		  public Property getPropertyById(int id){
+
+			  String sql = "SELECT property_id, locationcode, area_sqft, bedrooms, bathrooms, parking, metro_distance, price FROM property WHERE property_id=?";
+
+			    List<Property> list = jdbc.query(sql,
+			            new BeanPropertyRowMapper<>(Property.class), id);
+
+			    if(list.isEmpty()){
+			        return null;
+			    }
+
+			    return list.get(0);
+			}
+
 }

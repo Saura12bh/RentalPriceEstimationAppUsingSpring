@@ -63,7 +63,7 @@ public class AdminController {
 		}
 		
 		//delete user
-		@GetMapping("/delete/{id}")
+		@GetMapping("/deleteuser/{id}")
 		@ResponseBody
 		public String deleteUser(@PathVariable("id") int id)
 		{
@@ -99,10 +99,10 @@ public class AdminController {
 		    return adminService.getCities(statecode);
 		}
 
-		@GetMapping("/locations/{locationcode}")
+		@GetMapping("/locations/{cid}")
 		@ResponseBody
-		public List<Location> getLocations(@PathVariable("locationcode") int locationcode){
-		    return adminService.getLocations(locationcode);
+		public List<Location> getLocations(@PathVariable("cid") int cid){
+		    return adminService.getLocations(cid);
 		}
 		
 		@PostMapping("/addLocation")
@@ -154,5 +154,20 @@ public class AdminController {
 		     adminService.deleteProperty(id);
 		     return "Property Deleted Successfully";
 		 }
+		 //update
+		  @GetMapping("/property/{id}")
+		  @ResponseBody
+		  public Property getPropertyById(@PathVariable("id") int id){
+		        return adminService.getPropertyById(id);
+		    }
+		 
+
+		  @PostMapping("/updateProperty")
+			 @ResponseBody
+		  public String updateProperty(@RequestBody Property p){
+		        return adminService.updateProperty(p) ? "Property Updated" : "Update Failed";
+		    }
+
+		  
 }
 

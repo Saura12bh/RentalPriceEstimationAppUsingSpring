@@ -3,6 +3,7 @@ package org.springMvc.repo;
 import java.util.List;
 import java.util.Map;
 
+import org.springMvc.model.Property;
 import org.springMvc.model.User;
 
 public interface UserRepo {
@@ -16,4 +17,5 @@ public interface UserRepo {
 	public List<Map<String, Object>> getCities(int statecode);
 	 public List<Map<String, Object>> getLocations(int cid);
 	 public int saveProperty(Map<String,Object> data);
+		public List<Property> getAllProperties();
 }

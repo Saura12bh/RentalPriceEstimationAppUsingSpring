@@ -17,11 +17,13 @@ public interface AdminRepo {
 	public void saveLocation(Location loc);
 	public void addLocation(String locationname,int cid);
 	
-	public List<Location> getLocations(int locationcode);
+	public List<Location> getLocations(int cid);
 	public void saveProperty(Property p);
 	
 	public List<PropertyDisplay> getAllProperty();
 	public List<Property> searchProperty(String city);
 	public void deleteProperty(int id);
 
+	 public int updateProperty(Property p);
+	 public Property getPropertyById(int id);
 }
