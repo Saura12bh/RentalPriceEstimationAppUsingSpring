@@ -10,6 +10,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages = {"org.springMvc"})
 @EnableWebMvc
 public class DbConfig {
+	
+//	//Local
 	@Bean("dataSource")
 	public DriverManagerDataSource getDataSource()
 	{
@@ -20,6 +22,19 @@ public class DbConfig {
 		ds.setUrl("jdbc:mysql://localhost:3306/rentalpriceapp");
 		return ds;		
 	}
+	
+	//live
+	
+//	@Bean("dataSource")
+//	public DriverManagerDataSource getDataSource()
+//	{
+//		DriverManagerDataSource ds=new DriverManagerDataSource();
+//		ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//		ds.setUsername("smprowor_Saurabh");
+//		ds.setPassword("IWA3#W8Dg%L_Y)E4");
+//		ds.setUrl("jdbc:mysql://localhost:3306/smprowor_rentalpriceapp");
+//		return ds;		
+//	}
 	@Bean("jdbcTemplate")
 	public JdbcTemplate getJdbcTemplate()
 	{

@@ -166,6 +166,7 @@ public class UserServiceImpl implements UserService{
 
 		    input.setPrice((int)predicted);
 
+		    //y = b0 + b1*x1 +b2*x2+ b3*x3
 		    return input;
 		}
 

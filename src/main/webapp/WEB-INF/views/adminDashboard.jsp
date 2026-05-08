@@ -1,4 +1,5 @@
 
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -348,54 +349,69 @@ if (user == null) {
 			</div>
 		</div>
 	</div>
-	<div id="updateForm" class="section d-none">
-		<div class="container mt-5">
+	
+	<!-- UPDATE MODAL -->
+<div class="modal fade" id="updateModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
 
-			<h3 class="text-light mb-4">Update Property</h3>
+      <div class="modal-header">
+        <h5 class="modal-title">Update Property</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
 
-			<input type="hidden" id="upid">
+      <div class="modal-body">
 
-			<div class="mb-3">
-				<label>Location Code</label> <input type="number" id="ulocation"
-					class="form-control">
-			</div>
+        <input type="hidden" id="upid">
 
-			<div class="mb-3">
-				<label>Area</label> <input type="number" id="uarea"
-					class="form-control">
-			</div>
+        <div class="mb-2">
+          <label>Location Code</label>
+          <input type="number" id="ulocation" class="form-control">
+        </div>
 
-			<div class="mb-3">
-				<label>Bedrooms</label> <input type="number" id="ubed"
-					class="form-control">
-			</div>
+        <div class="mb-2">
+          <label>Area</label>
+          <input type="number" id="uarea" class="form-control">
+        </div>
 
-			<div class="mb-3">
-				<label>Bathrooms</label> <input type="number" id="ubath"
-					class="form-control">
-			</div>
+        <div class="mb-2">
+          <label>Bedrooms</label>
+          <input type="number" id="ubed" class="form-control">
+        </div>
 
-			<div class="mb-3">
-				<label>Parking</label> <select id="upark" class="form-control">
-					<option value="true">Yes</option>
-					<option value="false">No</option>
-				</select>
-			</div>
+        <div class="mb-2">
+          <label>Bathrooms</label>
+          <input type="number" id="ubath" class="form-control">
+        </div>
 
-			<div class="mb-3">
-				<label>Metro Distance</label> <input type="number" id="umetro"
-					class="form-control">
-			</div>
+        <div class="mb-2">
+          <label>Parking</label>
+          <select id="upark" class="form-control">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
 
-			<div class="mb-3">
-				<label>Price</label> <input type="number" id="uprice"
-					class="form-control">
-			</div>
+        <div class="mb-2">
+          <label>Metro Distance</label>
+          <input type="number" id="umetro" class="form-control">
+        </div>
 
-			<button class="btn btn-success" onclick="updatePropertyData()">Update</button>
+        <div class="mb-2">
+          <label>Price</label>
+          <input type="number" id="uprice" class="form-control">
+        </div>
 
-		</div>
-	</div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success" onclick="updatePropertyData()">Update</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 	<script>
 	
 function showSection(sectionId) {
@@ -903,25 +919,23 @@ function deleteProperty(id){
 //update
 function editProperty(id){
 
-	    fetch("/RentalPriceEstimationApp/admin/property/" + id)
-	    .then(res => res.json())
-	    .then(data => {
+    fetch("/RentalPriceEstimationApp/admin/property/" + id)
+    .then(res => res.json())
+    .then(data => {
 
-	        showSection('updateForm');
+        document.getElementById("upid").value = data.property_id;
+        document.getElementById("ulocation").value = data.locationcode;
+        document.getElementById("uarea").value = data.area_sqft;
+        document.getElementById("ubed").value = data.bedrooms;
+        document.getElementById("ubath").value = data.bathrooms;
+        document.getElementById("upark").value = data.parking;
+        document.getElementById("umetro").value = data.metro_distance;
+        document.getElementById("uprice").value = data.price;
 
-	        document.getElementById("upid").value = data.property_id;
-	        document.getElementById("ulocation").value = data.locationcode;
-	        document.getElementById("uarea").value = data.area_sqft;
-	        document.getElementById("ubed").value = data.bedrooms;
-	        document.getElementById("ubath").value = data.bathrooms;
-	        document.getElementById("upark").value = data.parking;
-	        document.getElementById("umetro").value = data.metro_distance;
-	        document.getElementById("uprice").value = data.price;
-
-	    })
-	    .catch(err => {
-	        alert("Error: " + err);
-	    });
+        // 👇 modal open
+        let modal = new bootstrap.Modal(document.getElementById('updateModal'));
+        modal.show();
+    });
 }
 
 function updatePropertyData(){
@@ -947,11 +961,12 @@ function updatePropertyData(){
     .then(res => res.text())
     .then(msg => {
         alert(msg);
-        showSection('searchForm');
+
+        // modal close
+        let modal = bootstrap.Modal.getInstance(document.getElementById('updateModal'));
+        modal.hide();
+
         loadProperty();
-    })
-    .catch(err => {
-        alert("Error: " + err);
     });
 }
 
@@ -998,5 +1013,7 @@ function displayInquery() {
     });
 }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
